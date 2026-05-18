@@ -1,5 +1,5 @@
-# Environment variables
-.env
+# Environment variables (secrets)
+backend/.env
 
 # Python cache
 __pycache__/
@@ -7,11 +7,15 @@ __pycache__/
 
 # Virtual environment
 venv/
-.env/
 
 # Node modules (if any)
 node_modules/
 
+# Build output
+frontend/build/
+
 # OS files
 .DS_Store
+
+# Database files
 *.db

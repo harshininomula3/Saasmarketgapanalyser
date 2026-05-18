@@ -5,12 +5,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "sqlite:///./gap_analyzer.db"
-)
+# Use a database path relative to this file's directory
+_base_dir = os.path.dirname(os.path.abspath(__file__))
+_default_db = f"sqlite:///{os.path.join(_base_dir, 'gap_analyzer.db')}"
 
-engine = create_engine(DATABASE_URL, echo=False, connect_args={"check_same_thread": False})
+DATABASE_URL = os.getenv("DATABASE_URL", _default_db)
+
+# check_same_thread is only needed for SQLite
+connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+engine = create_engine(DATABASE_URL, echo=False, connect_args=connect_args)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
